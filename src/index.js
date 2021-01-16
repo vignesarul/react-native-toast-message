@@ -1,9 +1,13 @@
 import React from 'react';
-import { Animated, PanResponder, ViewPropTypes, Keyboard } from 'react-native';
+import { Animated, ViewPropTypes, Keyboard } from 'react-native';
 import PropTypes from 'prop-types';
 
-import { SuccessToast, ErrorToast, InfoToast } from './components';
-import { useSimpleReducer, useAnimation, useConfig } from './hooks';
+import {
+  useSimpleReducer,
+  useAnimation,
+  useConfig,
+  useSwipeToDismiss
+} from './hooks';
 import { isFunc } from './utils/type';
 import styles from './styles';
 
@@ -55,7 +59,8 @@ function Toast(props, ref) {
     position,
     type
   });
-  const { animate, animationStyle } = useAnimation(state);
+  const { animate, animationStyle, animatedValue } = useAnimation(state);
+  const { panResponder } = useSwipeToDismiss(animatedValue, state);
 
   console.log({
     isVisible: state.isVisible,
@@ -97,7 +102,7 @@ function Toast(props, ref) {
       ...(rest?.props ? { customProps: rest.props } : {}),
       isVisible: true
     });
-    await animate({ toValue: 1 });
+    await animate({ toValue: state.topOffset });
     if (isFunc(onShow)) {
       onShow();
     }
@@ -119,8 +124,7 @@ function Toast(props, ref) {
     <Animated.View
       onLayout={onLayout}
       style={[styles.base, animationStyle, style]}
-      // {...this.panResponder.panHandlers}
-    >
+      {...panResponder.panHandlers}>
       {renderContent()}
     </Animated.View>
   );

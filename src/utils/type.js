@@ -1,3 +1,3 @@
-const isFunc = (p) => p && typeof p === 'function';
+const isFunc = (f) => f && typeof f === 'function';
 
 export { isFunc };

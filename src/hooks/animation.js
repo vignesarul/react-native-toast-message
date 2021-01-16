@@ -36,9 +36,36 @@ function getStyle(state, animatedValue) {
   });
 
   return {
-    ...styles[position],
-    transform: [{ translateY }]
+    // ...styles[position]
+    transform: [{ translateY: animatedValue }]
   };
+}
+
+function getValue(v, state) {
+  const {
+    position,
+    topOffset,
+    bottomOffset,
+    keyboardOffset,
+    keyboardHeight,
+    height
+  } = state;
+  const isBottom = position === 'bottom';
+  const offset = isBottom ? bottomOffset : topOffset;
+
+  let output;
+
+  switch (v) {
+    case 0:
+      output = -(height * 1.5);
+      break;
+    case 1:
+      output = offset;
+    case 2:
+      output = keyboardOffset + keyboardHeight;
+  }
+
+  return output;
 }
 
 function useAnimation(state) {
@@ -48,7 +75,7 @@ function useAnimation(state) {
     return new Promise((resolve) => {
       Animated.spring(animatedValue, {
         ...animationConfig,
-        toValue
+        offset: state.topOffset
       }).start(() => resolve());
     });
   };
@@ -57,7 +84,8 @@ function useAnimation(state) {
 
   return {
     animate,
-    animationStyle
+    animationStyle,
+    animatedValue
   };
 }
 
