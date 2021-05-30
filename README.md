@@ -1,4 +1,6 @@
-# react-native-toast-message
+# react-native-toast-message-opacity
+
+### Forked from react-native-toast-message with opacity fixed
 
 [![npm version](https://img.shields.io/npm/v/react-native-toast-message)](https://www.npmjs.com/package/react-native-toast-message)
 [![npm downloads](https://img.shields.io/npm/dw/react-native-toast-message)](https://www.npmjs.com/package/react-native-toast-message)
@@ -14,7 +16,7 @@ Animated toast message component for React Native.
 ## Install
 
 ```
-yarn add react-native-toast-message
+yarn add react-native-toast-message-opacity
 ```
 
 ![ToastSuccess](success-toast.gif)
