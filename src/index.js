@@ -365,7 +365,11 @@ class Toast extends Component {
       styles.base,
       styles[position],
       {
-        transform: [{ translateY }]
+        transform: [{ translateY }],
+        opacity: animation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 1],
+        }),
       }
     ];
   }
